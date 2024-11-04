@@ -1,0 +1,110 @@
+{% extends "template.html" %}
+
+{% block title %} GET GEAR {% endblock %}
+
+{%block body %}
+<h1 style="margin-left: 10%"> Search for an item (to do) </h1>
+
+<h1 style="margin-left: 10%"> ITEM LIST </h1>
+
+<input value="default" type="text" id="query" placeholder="Search items (brand/model)">
+
+
+<select id="sort-select">
+    <option value="id">Sort by ID</option>
+    <option value="type">Sort by Type</option>
+    <option value="price">Sort by Price</option>
+    <option value="rating">Sort by Rating</option>
+</select>
+
+<select id="reverse-order">
+    <option value="normal"> Normal order </option>
+    <option value="reverse"> Reverse order </option>
+</select>
+
+<div class="card-container">
+
+    {% for item in gear_data %}
+    <div class="card" data-id="{{item['id']}}">
+        <table>
+            <tr>
+                <td id="highlight">Type: </td>
+            <td>{{ item["type"] }}</td>
+            </tr>
+            <tr>
+                <td id="highlight">Model: </td>
+                <td>{{ item["model"] }}</td>
+            </tr>
+            <tr>
+                <td id="highlight">Price: </td>
+                <td>{{ item["price"] }}</td>
+            </tr>
+            <tr>
+                <td id="highlight">Rating: </td>
+                <td>{{item["rating"]}}</td>
+            </tr>
+        </table>
+    </div>
+
+{% endfor %}
+</div>
+
+
+<a href="/">Go to main page</a>
+
+<script>
+    //UPDATE DATA DYNAMICALLY
+    function update_gear_data(){
+        const query = document.getElementById('query').value;
+        const sort_by = document.getElementById('sort-select').value;
+        const reverse = document.getElementById('reverse-order').value;
+        const regex = new RegExp(query, "i"); 
+        //FETCH, INCLUDE BOTH USER-PROVIDED VALUES
+        fetch(`/get_gear?query=${encodeURIComponent(query)}&sort_by=${sort_by}&reverse=${reverse}`)
+        //PARSE FROM JSON TO JS-OBJECT
+        .then(response => response.json())
+        //USE PARSED DATA
+        .then(data => {
+            const card_container = document.querySelector(".card-container");
+            card_container.innerHTML = '';
+            const filtered_data = data.filter(item =>
+                regex.test(item.model) || regex.test(item.brand)
+            );
+            //CREATE CARD TO EVERY ELEMENT IN OBJECT
+            filtered_data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                <table>
+                    <tr>
+                        <td id="highlight">Type: </td>
+                        <td>${item.type}</td>
+                    </tr>
+                    <tr>
+                        <td id="highlight">Brand: </td>
+                        <td>${item.brand}</td>
+                    </tr>
+                    <tr>
+                        <td id="highlight">Model: </td>
+                        <td>${item.model}</td>
+                    </tr>
+                    <tr>
+                        <td id="highlight">Price: </td>
+                        <td>${item.price}</td>
+                        </tr>
+                        <tr>
+                        <td id="highlight">Rating: </td>
+                        <td>${item.rating}</td>
+                </table>
+                `;
+                card_container.appendChild(card);
+            })
+        })
+        .catch(error => console.error('Error fetching sorted gear:', error));
+    }
+    //LOOK FOR CHANGES
+    document.getElementById('query').addEventListener('input', update_gear_data)
+    document.getElementById('sort-select').addEventListener('change', update_gear_data);
+    document.getElementById('reverse-order').addEventListener('change', update_gear_data);
+</script>
+{% endblock %}

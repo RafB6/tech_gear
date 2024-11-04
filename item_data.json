@@ -1,0 +1,202 @@
+[
+    {
+        "id": 1,
+        "type": "mouse",
+        "brand": "Logitech",
+        "model": "G502 HERO",
+        "price": 49.99,
+        "rating": 4.7
+    },
+    {
+        "id": 2,
+        "type": "keyboard",
+        "brand": "Corsair",
+        "model": "K95 RGB Platinum",
+        "price": 159.99,
+        "rating": 4.8
+    },
+    {
+        "id": 3,
+        "type": "headset",
+        "brand": "SteelSeries",
+        "model": "Arctis 7",
+        "price": 99.99,
+        "rating": 4.5
+    },
+    {
+        "id": 4,
+        "type": "mouse",
+        "brand": "Razer",
+        "model": "DeathAdder V2",
+        "price": 69.99,
+        "rating": 4.6
+    },
+    {
+        "id": 5,
+        "type": "keyboard",
+        "brand": "Razer",
+        "model": "BlackWidow V3",
+        "price": 139.99,
+        "rating": 4.5
+    },
+    {
+        "id": 6,
+        "type": "headset",
+        "brand": "HyperX",
+        "model": "Cloud II",
+        "price": 99.99,
+        "rating": 4.7
+    },
+    {
+        "id": 7,
+        "type": "mouse",
+        "brand": "Logitech",
+        "model": "G Pro Wireless",
+        "price": 149.99,
+        "rating": 4.8
+    },
+    {
+        "id": 8,
+        "type": "keyboard",
+        "brand": "Razer",
+        "model": "Huntsman Elite",
+        "price": 199.99,
+        "rating": 4.7
+    },
+    {
+        "id": 9,
+        "type": "headset",
+        "brand": "Corsair",
+        "model": "HS70 Pro",
+        "price": 99.99,
+        "rating": 4.4
+    },
+    {
+        "id": 10,
+        "type": "mouse",
+        "brand": "SteelSeries",
+        "model": "Rival 600",
+        "price": 79.99,
+        "rating": 4.5
+    },
+    {
+        "id": 11,
+        "type": "keyboard",
+        "brand": "Cooler Master",
+        "model": "CK550",
+        "price": 79.99,
+        "rating": 4.3
+    },
+    {
+        "id": 12,
+        "type": "headset",
+        "brand": "SteelSeries",
+        "model": "Arctis Pro",
+        "price": 199.99,
+        "rating": 4.6
+    },
+    {
+        "id": 13,
+        "type": "mouse",
+        "brand": "Razer",
+        "model": "Viper Ultimate",
+        "price": 149.99,
+        "rating": 4.8
+    },
+    {
+        "id": 14,
+        "type": "keyboard",
+        "brand": "Logitech",
+        "model": "G915 TKL",
+        "price": 229.99,
+        "rating": 4.9
+    },
+    {
+        "id": 15,
+        "type": "headset",
+        "brand": "HyperX",
+        "model": "Cloud Revolver",
+        "price": 129.99,
+        "rating": 4.5
+    },
+    {
+        "id": 16,
+        "type": "mouse",
+        "brand": "Corsair",
+        "model": "Scimitar RGB Elite",
+        "price": 89.99,
+        "rating": 4.4
+    },
+    {
+        "id": 17,
+        "type": "keyboard",
+        "brand": "Razer",
+        "model": "Ornata V2",
+        "price": 99.99,
+        "rating": 4.6
+    },
+    {
+        "id": 18,
+        "type": "headset",
+        "brand": "Logitech",
+        "model": "G533 Wireless",
+        "price": 149.99,
+        "rating": 4.3
+    },
+    {
+        "id": 19,
+        "type": "mouse",
+        "brand": "Glorious PC Gaming Race",
+        "model": "Model O",
+        "price": 49.99,
+        "rating": 4.7
+    },
+    {
+        "id": 20,
+        "type": "keyboard",
+        "brand": "Ducky",
+        "model": "One 2 Mini",
+        "price": 109.99,
+        "rating": 4.8
+    },
+    {
+        "id": 21,
+        "type": "headset",
+        "brand": "ASUS",
+        "model": "ROG Delta",
+        "price": 199.99,
+        "rating": 4.6
+    },
+    {
+        "id": 22,
+        "type": "mouse",
+        "brand": "Cooler Master",
+        "model": "MM711",
+        "price": 49.99,
+        "rating": 4.5
+    },
+    {
+        "id": 23,
+        "type": "keyboard",
+        "brand": "SteelSeries",
+        "model": "Apex Pro",
+        "price": 199.99,
+        "rating": 4.7
+    },
+    {
+        "id": 24,
+        "type": "headset",
+        "brand": "Corsair",
+        "model": "Void Elite",
+        "price": 99.99,
+        "rating": 4.4
+    },
+    {
+        "id": 25,
+        "type": "mouse",
+        "brand": "Razer",
+        "model": "Naga X",
+        "price": 79.99,
+        "rating": 4.5
+    }
+]
