@@ -57,7 +57,10 @@
 <a href="/">Go to main page</a>
 
 <script>
-    
+    const query = document.getElementById('query').value;
+    const sort_by = document.getElementById('sort-select').value;
+    const reverse = document.getElementById('reverse-order').value;
+
     let gearData;
     //FETCH FULL DATA SET
     fetch("/get_gear")
@@ -72,13 +75,26 @@
     //ACCORDING TO USER's INPUT
     updateGearData = (event) => 
     {
-        const query = document.getElementById('query').value;
-        const sort_by = document.getElementById('sort-select').value;
-        const reverse = document.getElementById('reverse-order').value;
+        subData = gearData
+        //check for type error
+        if (typeof(event) !== "string") {
+            throw new TypeError("Expected event to be a string.");
+        }
+        
+        // check if filtering is needed
+        if (event === "query"){
+            if (query !== "") {
+                subData = reverseData(sortData(filterData(subData, query), sort_by), reverse);
+            }
+        }
+        // if not, just sort
+        else {
+            if (typeof(sort_by) !== "string" || typeof(reverse) !== "string") {
+                throw new TypeError("Wrong data type for sort_by / reverse");
+            }
 
-        subdata = gearData;
-
-        subdata = reverseData(sortData(filterData(subdata, query), sort_by), reverse);
+            subData = reverseData(sortData(subData, sort_by), reverse);
+        }
         
         const cardContainer = document.querySelector(".card-container");
         cardContainer.innerHTML = "";
