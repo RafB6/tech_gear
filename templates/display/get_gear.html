@@ -65,7 +65,6 @@
     .then(response => response.json())
     .then(data => {
         gearData = data;
-        console.log(gearData)
     })
     .catch(error => console.error("error fetching data", error));
 
@@ -86,23 +85,26 @@
                 const sort_by = document.getElementById('sort-select').value;
                 const reverse = document.getElementById('reverse-order').value;
 
+                if (typeof(sort_by) !== "string" || typeof(reverse) !== "string") {
+                    throw new TypeError("Wrong data type for sort_by / reverse");
+                }
+
                 subData = reverseData(sortData(filterData(subData, query), sort_by), reverse);
             }
         }
         // if not, just sort
         else {
+            const sort_by = document.getElementById('sort-select').value;
+            const reverse = document.getElementById('reverse-order').value;            
             if (typeof(sort_by) !== "string" || typeof(reverse) !== "string") {
                 throw new TypeError("Wrong data type for sort_by / reverse");
             }
-            const sort_by = document.getElementById('sort-select').value;
-            const reverse = document.getElementById('reverse-order').value;
-            
             subData = reverseData(sortData(subData, sort_by), reverse);
         }
         
         const cardContainer = document.querySelector(".card-container");
         cardContainer.innerHTML = "";
-        subdata.forEach(element => {
+        subData.forEach(element => {
             const card = document.createElement('div');
             card.className = "card";
             card.innerHTML = `
@@ -156,7 +158,7 @@
             if (category === "type"){
                 const aType = aVal || "";
                 const bType = bVal || "";
-                return aType.localCompare(bType);
+                return aType.localeCompare(bType);
             } else {
                 const aInt = typeof aVal === "number" ? aVal : 0;
                 const bInt = typeof bVal === "number" ? bVal : 0;
