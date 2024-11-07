@@ -115,7 +115,6 @@
     //FILTER DATA
     filterData = (sub, subquery) => {
         if (typeof(subquery) !== "string"){
-            console.log(subquery);
             throw new TypeError("Expected a string for subquery");
         }
         
@@ -127,6 +126,10 @@
     }
 
     sortData = (sub, category) => {
+        if (typeof(category) !== "string"){
+            throw new TypeError("Expected string for category");
+        }
+
         if (category === "type"){
             sub.sort((a,b) => a.type.localeCompare(b.type));
         } else {
@@ -136,6 +139,10 @@
     }
 
     reverseData = (sub, mess) => {
+        if (typeof(mess) !== "string") {
+            throw new TypeError("Expected string for reverse message");
+        }
+
         if (mess === "normal"){
             return sub;
         } else {
@@ -144,7 +151,6 @@
     }
         //TODO:
         /*
-        ERROR HANDLING
         QUERY OPTIMALIZATION
         */
 
