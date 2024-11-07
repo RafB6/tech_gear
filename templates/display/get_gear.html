@@ -57,9 +57,7 @@
 <a href="/">Go to main page</a>
 
 <script>
-    const query = document.getElementById('query').value;
-    const sort_by = document.getElementById('sort-select').value;
-    const reverse = document.getElementById('reverse-order').value;
+    
 
     let gearData;
     //FETCH FULL DATA SET
@@ -84,6 +82,10 @@
         // check if filtering is needed
         if (event === "query"){
             if (query !== "") {
+                const query = document.getElementById('query').value;
+                const sort_by = document.getElementById('sort-select').value;
+                const reverse = document.getElementById('reverse-order').value;
+
                 subData = reverseData(sortData(filterData(subData, query), sort_by), reverse);
             }
         }
@@ -92,7 +94,9 @@
             if (typeof(sort_by) !== "string" || typeof(reverse) !== "string") {
                 throw new TypeError("Wrong data type for sort_by / reverse");
             }
-
+            const sort_by = document.getElementById('sort-select').value;
+            const reverse = document.getElementById('reverse-order').value;
+            
             subData = reverseData(sortData(subData, sort_by), reverse);
         }
         
@@ -145,12 +149,20 @@
         if (typeof(category) !== "string"){
             throw new TypeError("Expected string for category");
         }
-
-        if (category === "type"){
-            sub.sort((a,b) => a.type.localeCompare(b.type));
-        } else {
-            sub.sort((a,b) => (a[category] || 0) - (b[category] || 0));
-        }
+        sub.sort((a,b) => {
+            const aVal = a[category];
+            const bVal = b[category];
+            
+            if (category === "type"){
+                const aType = aVal || "";
+                const bType = bVal || "";
+                return aType.localCompare(bType);
+            } else {
+                const aInt = typeof aVal === "number" ? aVal : 0;
+                const bInt = typeof bVal === "number" ? bVal : 0;
+                return aInt - bInt; 
+            }
+        });
         return sub;
     }
 
