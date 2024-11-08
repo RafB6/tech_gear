@@ -14,10 +14,14 @@ with open("item_data.json", "r") as data_file:
 def gear():
     return render_template("display/get_gear.html", gear_data = gear_data)
 
-@app.route("/get_gear", methods=["GET"])
+@app.route("/get_gear")
 def get_gear():
     #return JSON to browser
     return jsonify(gear_data)
+
+@app.route("/login")
+def login():
+    return render_template("display/login.html")
 
 if __name__ == '__main__':
     app.run(debug=True)
