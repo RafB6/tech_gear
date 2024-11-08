@@ -1,0 +1,16 @@
+{% extends "template.html" %}
+
+{% block title %} Log In {% endblock %}
+
+
+{% block body %}
+
+<form>
+    <input type="text" id="username" name="username" placeholder="Username">
+    <input type="password" id="password" name="password" placeholder="Password">
+    <button type="button" onclick="dataValidator()"> Submit </button>
+</form>
+
+<script src="{{url_for('static', filename='data-validator.js')}}"></script>
+<script src="{{url_for('static', filename='log-in.js')}}"></script>
+{% endblock %}
