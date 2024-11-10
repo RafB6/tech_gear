@@ -14,17 +14,24 @@ def database_connection():
         g.db.row_factory = sqlite3.Row
     return g.db
 
-def close_db(exception):
+def close_db(exception = None):
     db = g.pop("db", None)
     if db is not None:
         db.close()
 
 
-        
+
 @app.route("/")
 def main():
     return render_template("display/main_page.html")
 
+@app.route("/users")
+def get_users():
+    db = database_connection()
+    cursor = db.execute("SELECT * FROM users")
+    users = cursor.fetchall()
+    close_db()
+    return {"users": [dict(row) for row in users]}
 
 @app.route("/gear")
 def gear():
