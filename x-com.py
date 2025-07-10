@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, jsonify
+from objects_functions import get_id
+from flask import Flask, render_template, request, redirect, jsonify, redirect, url_for
 import json
 
 app = Flask(__name__)
@@ -9,6 +10,32 @@ def main():
 
 with open("item_data.json", "r") as data_file:
     gear_data = json.load(data_file)
+
+@app.route("/add_gear", methods=["GET", "POST"])
+def add_gear():
+    #Get users values from form
+    if request.method == "POST":
+        gearId = len(gear_data) + 1 #get incremented id number
+        gearType = request.form.get("type")
+        model = request.form.get("model")
+        try:
+            price = float(request.form.get("price"))
+        except (TypeError, ValueError):
+            return "Error: Price must be a number", 400
+        newProduct = {
+            "id": gearId,
+            "type": gearType,
+            "model": model,
+            "price": price,
+            "rating": 0
+        }
+        gear_data.append(newProduct)
+        with open("item_data.json", "w") as data_file:
+            json.dump(gear_data, data_file, indent=4)
+
+        return redirect(url_for("gear"))
+    else:
+        return render_template("display/add_gear.html")
 
 @app.route("/gear")
 def gear():
