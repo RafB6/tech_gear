@@ -19,6 +19,11 @@ def add_gear():
         gearType = request.form.get("type")
         model = request.form.get("model")
         brand = request.form.get("brand")
+        
+        #Handle empty strings 
+        if len(model) == 0 or len(brand) == 0:
+            return "Error: detected empty field(s)"
+        
         try:
             price = float(request.form.get("price"))
         except (TypeError, ValueError):
