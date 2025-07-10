@@ -65,6 +65,7 @@ def add_gear():
 
 @app.route("/gear")
 def gear():
+    gear_data = get_Data()
     return render_template("display/get_gear.html", gear_data = gear_data)
 
 @app.route("/get_gear", methods=["GET"])
