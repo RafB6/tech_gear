@@ -8,9 +8,10 @@
 #    def __str__(self):
 #        return f"{self.id}, {self.model}, {self.price}, {self.rating}"
 
-def get_id(arr):
-    max_id = 0
-    for elem in arr:
-        if elem["id"] > max_id:
-            max_id = elem["id"]
-    return max_id + 1
+#Old id-assignment function
+#def get_id(arr):
+#    max_id = 0
+#    for elem in arr:
+#        if elem["id"] > max_id:
+#            max_id = elem["id"]
+#    return max_id + 1
