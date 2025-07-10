@@ -1,4 +1,3 @@
-/* Overall Page Styling */
 body {
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
@@ -7,14 +6,13 @@ body {
     padding: 20px;
 }
 
-/* Headings */
 h1 {
     font-size: 1.5rem;
     color: #444;
     margin-bottom: 20px;
 }
 
-/* Search and Filter Controls */
+
 input#query, select {
     padding: 10px;
     margin: 5px;
@@ -28,7 +26,7 @@ input#query {
     width: 250px;
 }
 
-/* Container for Cards */
+
 .card-container {
     display: flex;
     flex-wrap: wrap;
@@ -36,7 +34,6 @@ input#query {
     margin-top: 20px;
 }
 
-/* Card Styling */
 .card {
     background-color: white;
     border-radius: 8px;
@@ -50,7 +47,6 @@ input#query {
     transform: scale(1.05);
 }
 
-/* Table within Card */
 .card table {
     width: 100%;
     font-size: 0.9rem;
@@ -65,7 +61,6 @@ input#query {
     color: #555;
 }
 
-/* Link Styling */
 a {
     color: #007bff;
     text-decoration: none;
@@ -76,7 +71,6 @@ a:hover {
     text-decoration: underline;
 }
 
-/* Responsive Design */
 @media (max-width: 600px) {
     .card-container {
         flex-direction: column;
