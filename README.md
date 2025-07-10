@@ -7,7 +7,7 @@ Search items by brand or model (user input)
 Sort results by type, price, rating, or ID
 Toggle between ascending and descending order
 User can add a product to the list
-soon: rating system
+soon: rating system, 'delete product' feature
 
 Tech Stack:
 Flask, JavaScript, JSON, HTML/CSS, AJAX
