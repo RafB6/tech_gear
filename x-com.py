@@ -1,4 +1,4 @@
-from objects_functions import get_id
+#from objects_functions import get_id
 from flask import Flask, render_template, request, redirect, jsonify, redirect, url_for
 import json
 
