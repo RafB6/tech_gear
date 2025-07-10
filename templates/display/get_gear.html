@@ -3,7 +3,7 @@
 {% block title %} GET GEAR {% endblock %}
 
 {%block body %}
-<h1 style="margin-left: 10%"> Search for an item (to do) </h1>
+<h1 style="margin-left: 10%"> Search for an item </h1>
 
 <h1 style="margin-left: 10%"> ITEM LIST </h1>
 
@@ -63,7 +63,7 @@
         fetch(`/get_gear?query=${encodeURIComponent(query)}&sort_by=${sort_by}&reverse=${reverse}`)
         //PARSE FROM JSON TO JS-OBJECT
         .then(response => response.json())
-        //USE PARSED DATA
+        //PARSED DATA
         .then(data => {
             const card_container = document.querySelector(".card-container");
             card_container.innerHTML = '';
