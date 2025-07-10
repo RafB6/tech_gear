@@ -198,5 +198,13 @@
         "model": "Naga X",
         "price": 79.99,
         "rating": 4.5
+    },
+    {
+        "id": 26,
+        "type": "mouse",
+        "model": "G PRO",
+        "price": 120.99,
+        "brand": "Logitech",
+        "rating": 0
     }
 ]
