@@ -1,0 +1,14 @@
+{% extends "template.html" %}
+
+{% block title %} ADD GEAR {% endblock %}
+
+{% block body%} 
+    <h1> Hello world</h1>
+    <form method="post" action="">
+        <label for="type">Type: </label><input type="text" name="type" placeholder="type"><br>
+        <label for="model">Model: </label><input type="text" name="model" placeholder="model"><br>
+        <label for="price">Price: </label><input type="text" name="price" placeholder="price"><br>
+        <input type="submit" value="Add">
+    </form>
+    {{ data }}
+    {% endblock %}

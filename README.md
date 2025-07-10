@@ -6,7 +6,8 @@ Features:
 Search items by brand or model (user input)
 Sort results by type, price, rating, or ID
 Toggle between ascending and descending order
-soon: Ability to add a product by the user
+User can add a product to the list
+soon: rating system
 
 Tech Stack:
 Flask, JavaScript, JSON, HTML/CSS, AJAX
