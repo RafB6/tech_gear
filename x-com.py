@@ -48,17 +48,15 @@ def get_gear():
     reverse = request.args.get('reverse', 'normal')
     query = request.args.get('query', 'default')
     #check for reverse, its value is crucial determine if implementation of sorting algorithm is necessary
-    if reverse == "normal":
-        rev = False
-    else:
-        rev = True
+    rev = (reverse == "reverse")
 
     query_gear = []
+    #Look for items according to user's input
     if query != "default" and len(query) > 0 and query is not None:
         for elem in gear_data:
             if elem in query_gear:
                 continue
-
+            #Check if any sort category contains user's query
             if query.lower() in str(elem["brand"]).lower() or query.lower() in str(elem["model"]).lower():
                 query_gear.append(elem)
     else:

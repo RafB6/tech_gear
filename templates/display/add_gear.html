@@ -3,12 +3,19 @@
 {% block title %} ADD GEAR {% endblock %}
 
 {% block body%} 
-    <h1> Hello world</h1>
+    <h1> Add a product </h1>
     <form method="post" action="">
-        <label for="type">Type: </label><input type="text" name="type" placeholder="type"><br>
+        <label for="type">Type: </label>
+        <select name="type">
+            <option value="mouse"> Mouse </option>
+            <option value="heyboard"> Keyboard </option>
+            <option value="headset"> Headset </option>
+        </select>
+        
+        <br>
         <label for="model">Model: </label><input type="text" name="model" placeholder="model"><br>
         <label for="price">Price: </label><input type="text" name="price" placeholder="price"><br>
         <input type="submit" value="Add">
     </form>
-    {{ data }}
+    <h1><a href="/gear"> Back to gear list </a></h1>
     {% endblock %}
