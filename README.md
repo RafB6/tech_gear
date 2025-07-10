@@ -10,7 +10,7 @@ User can add a product to the list
 soon: rating system, 'delete product' feature
 
 Tech Stack:
-Flask, JavaScript, JSON, HTML/CSS, AJAX
+Flask, JavaScript, SQLITE3(used to be JSON, but sqlite is more efficient in this use-case), HTML/CSS, AJAX
 
 How to run:
 Install flask ("pip install flask")
