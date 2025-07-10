@@ -18,6 +18,7 @@ def add_gear():
         gearId = len(gear_data) + 1 #get incremented id number
         gearType = request.form.get("type")
         model = request.form.get("model")
+        brand = request.form.get("brand")
         try:
             price = float(request.form.get("price"))
         except (TypeError, ValueError):
@@ -27,6 +28,7 @@ def add_gear():
             "type": gearType,
             "model": model,
             "price": price,
+            "brand": brand,
             "rating": 0
         }
         gear_data.append(newProduct)
