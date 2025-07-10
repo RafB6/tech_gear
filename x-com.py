@@ -1,6 +1,7 @@
 #from objects_functions import get_id
 from flask import Flask, render_template, request, redirect, jsonify, redirect, url_for
 import json
+import sqlite3
 
 app = Flask(__name__)
 
@@ -8,14 +9,35 @@ app = Flask(__name__)
 def main():
     return render_template("display/main_page.html")
 
-with open("item_data.json", "r") as data_file:
-    gear_data = json.load(data_file)
+def connect_to_database():
+    conn = sqlite3.connect('gear.db')
+    conn.row_factory = sqlite3.Row
+    return conn
+
+#GET DATA
+def get_Data():
+    conn = connect_to_database()
+    cursor = conn.execute("SELECT * FROM gear")
+    rows = cursor.fetchall()
+    conn.close()
+    gear_data = [dict(row) for row in rows]
+    return gear_data
+gear_data = get_Data()
+
+#TRANSFERING JSON DATA TO DATABASE
+#conn = sqlite3.connect('gear.db')
+#cursor = conn.cursor()
+#for product in gear_data:
+#    cursor.execute(f''' 
+#    INSERT INTO gear (type, brand, model, price, rating) VALUES (?,?,?,?,?)
+#    ''', (product["type"], product["brand"], product["model"], product["price"], product["rating"]))
+#conn.commit()
+#conn.close()
 
 @app.route("/add_gear", methods=["GET", "POST"])
 def add_gear():
     #Get users values from form
     if request.method == "POST":
-        gearId = len(gear_data) + 1 #get incremented id number
         gearType = request.form.get("type")
         model = request.form.get("model")
         brand = request.form.get("brand")
@@ -28,17 +50,14 @@ def add_gear():
             price = float(request.form.get("price"))
         except (TypeError, ValueError):
             return "Error: Price must be a number", 400
-        newProduct = {
-            "id": gearId,
-            "type": gearType,
-            "model": model,
-            "price": price,
-            "brand": brand,
-            "rating": 0
-        }
-        gear_data.append(newProduct)
-        with open("item_data.json", "w") as data_file:
-            json.dump(gear_data, data_file, indent=4)
+        conn = connect_to_database()
+        cursor = conn.cursor()
+        #Insert new product to database
+        cursor.execute(f"INSERT INTO gear (type, brand, model, price, rating) VALUES (?,?,?,?,?)", (gearType, brand, model, price, 0))
+        conn.commit()
+        conn.close()
+        #Update current 'gear_data'
+        gear_data = get_Data()
 
         return redirect(url_for("gear"))
     else:
@@ -61,11 +80,10 @@ def get_gear():
     #Look for items according to user's input
     if query != "default" and len(query) > 0 and query is not None:
         for elem in gear_data:
-            if elem in query_gear:
-                continue
-            #Check if any sort category contains user's query
-            if query.lower() in str(elem["brand"]).lower() or query.lower() in str(elem["model"]).lower():
-                query_gear.append(elem)
+            if elem not in query_gear:
+                #Check if any sort category contains user's query
+                if query.lower() in str(elem["brand"]).lower() or query.lower() in str(elem["model"]).lower():
+                    query_gear.append(elem)
     else:
         query_gear = gear_data
     
