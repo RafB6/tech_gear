@@ -20,6 +20,7 @@ def get_gear():
     sort_by = request.args.get('sort_by', 'id')
     reverse = request.args.get('reverse', 'normal')
     query = request.args.get('query', 'default')
+    #check for reverse, its value is crucial determine if implementation of sorting algorithm is necessary
     if reverse == "normal":
         rev = False
     else:
