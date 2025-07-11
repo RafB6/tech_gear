@@ -4,7 +4,7 @@
 
 {% block body%} 
     <h1> Add a product </h1>
-    <form method="post" action="">
+    <form method="post" action="" onsubmit="return validate()">
         <label for="type">Type: </label>
         <select name="type">
             <option value="mouse"> Mouse </option>
@@ -16,7 +16,29 @@
         <label for="model">Model: </label><input type="text" name="model" placeholder="model" autocomplete="off"><br>
         <label for="price">Price: </label><input type="text" name="price" placeholder="price (xxx.xx / xxx)" autocomplete="off"><br>
         <label for="brand">Brand: </label><input type="text" name="brand" placeholder="brand" autocomplete="off"><br>
+        <p id="errorMessage" style="color:red; text-decoration: underline;"></p>
         <input type="submit" value="Add">
     </form>
     <h1><a href="/gear"> Back to gear list </a></h1>
+
+    <script>
+        function validate() {
+            const errorMessage = document.getElementById("errorMessage");
+            const model = document.getElementsByName("model")[0].value.trim();
+            const price = document.getElementsByName("price")[0].value.trim();
+            const brand = document.getElementsByName("brand")[0].value.trim();
+            if ( model.length <= 0 || price.length <= 0 || brand.length <= 0) {
+                errorMessage.innerHTML = "All fields must be filled";
+                return false;
+            }
+            if (isNaN(price)) {
+                errorMessage.innerHTML = "Incorrect price format";
+                return false;
+            }
+            
+            errorMessage.innerHTML = ""
+            return true;
+        
+        }
+    </script>
     {% endblock %}
