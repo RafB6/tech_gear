@@ -1,5 +1,5 @@
 #from objects_functions import get_id
-from flask import Flask, render_template, request, redirect, jsonify, redirect, url_for
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 import json
 import sqlite3
 
@@ -43,7 +43,7 @@ def add_gear():
         brand = request.form.get("brand")
         price = float(request.form.get("price"))
 
-        
+
         '''[OLD, SWITCHED TO CLIENT-SIDE VALIDATION]'''
         #Handle empty strings  
         #if len(model) == 0 or len(brand) == 0:
