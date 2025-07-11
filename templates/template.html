@@ -7,8 +7,28 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></link>
 </head>
 <body>
-
+    <button class="theme-toggle" id="themeToggle" title="Toggle Theme"> 🌙 </button>
     {% block body %}
     {% endblock %}
+
+
+<script> 
+    const toggleButton = document.getElementById('themeToggle');
+    const body = document.body;
+
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add("dark-mode");
+        toggleButton.textContent = '🌞';
+    }
+
+    toggleButton.addEventListener('click', () => {
+        body.classList.toggle("dark-mode");
+        const isDark = body.classList.contains('dark-mode');
+        toggleButton.textContent = isDark ? '🌞' : '🌙';
+        localStorage.setItem('theme' === isDark ? 'dark' : 'light' )
+    })
+</script>
+
 </body>
+
 </html>
