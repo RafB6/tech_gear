@@ -42,6 +42,8 @@ def add_gear():
         model = request.form.get("model")
         brand = request.form.get("brand")
         price = float(request.form.get("price"))
+
+        
         '''[OLD, SWITCHED TO CLIENT-SIDE VALIDATION]'''
         #Handle empty strings  
         #if len(model) == 0 or len(brand) == 0:
