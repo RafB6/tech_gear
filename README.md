@@ -8,8 +8,9 @@ Sort results by type, price, rating, or ID
 Toggle between ascending and descending order
 User can add a product to the list
 Client-side validation
+Dark/Light Motive
 
-soon: dark, light motive, possibly adding RESTapi, rating system, 'delete product' feature
+soon:possibly adding RESTapi, rating system, 'delete product' feature
 
 Tech Stack:
 Flask, JavaScript, SQLITE3(used to be JSON, but sqlite is more efficient in this use-case), HTML/CSS, AJAX
