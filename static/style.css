@@ -81,6 +81,14 @@ body {
   background-color: #ffffff;
   color: #222222;
 }
+.light-mode {
+    background-color: #f0f0f0;
+    color: #121212;
+}
+.light-mode table {
+    background-color: #f0f0f0;
+}
+
 .dark-mode {
   background-color: #121212;
   color: #f0f0f0;
@@ -93,12 +101,11 @@ body {
   position: fixed;
   top: 10px;
   right: 10px;
-  border-radius: 50%;
   padding: 5px;
   cursor: pointer;
   font-size: 30px;
   transition: transform 0.3s ease;
 }
 .theme-toggle:hover {
-  transform: rotate(20deg);
+  transform: rotate(10deg);
 }
