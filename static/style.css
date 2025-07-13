@@ -60,7 +60,7 @@ a {
 }
 
 a:hover {
-    text-decoration: underline;
+    transform: scale(1.1);
 }
 
 @media (max-width: 600px) {
@@ -108,4 +108,31 @@ body {
 }
 .theme-toggle:hover {
   transform: rotate(10deg);
+}
+
+
+.banner-container {
+    display: flex;
+    float: left;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+}
+
+.banner {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: 200px;
+    transition: transform 0.2s;
+    border-width: 1px;
+    border: solid;
+    margin: 20px;
+}
+
+.banner:hover {
+    transform: scale(1.75);
 }
