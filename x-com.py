@@ -1,5 +1,5 @@
 #from objects_functions import get_id
-from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask import Flask, render_template, request, jsonify, redirect, url_for, make_response
 import json
 import sqlite3
 
@@ -24,6 +24,15 @@ def get_Data():
     return gear_data
 gear_data = get_Data()
 
+#SET THEME COOKIE
+@app.route("/setTheme", methods=['POST'])
+def setTheme():
+    data = request.get_json()
+    theme = data.get('theme', 'light')
+    response = make_response(jsonify(success=True))
+    response.set_cookie('theme', theme)
+    return response
+
 #TRANSFERING JSON DATA TO DATABASE
 #conn = sqlite3.connect('gear.db')
 #cursor = conn.cursor()
@@ -37,6 +46,7 @@ gear_data = get_Data()
 @app.route("/add_gear", methods=["GET", "POST"])
 def add_gear():
     #Get users values from form
+    theme = request.cookies.get("theme", "light")
     if request.method == "POST":
         gearType = request.form.get("type")
         model = request.form.get("model")
@@ -67,12 +77,13 @@ def add_gear():
 
         return redirect(url_for("gear"))
     else:
-        return render_template("display/add_gear.html")
+        return render_template("display/add_gear.html", theme=theme)
 
 @app.route("/gear")
 def gear():
+    theme = request.cookies.get("theme", "light")
     gear_data = get_Data()
-    return render_template("display/get_gear.html", gear_data = gear_data)
+    return render_template("display/get_gear.html", gear_data = gear_data, theme = theme)
 
 @app.route("/get_gear", methods=["GET"])
 def get_gear():
@@ -94,7 +105,7 @@ def get_gear():
     else:
         query_gear = gear_data
     
-    #print values
+    #sort values
     if sort_by == "price":
         sorted_gear = sorted(query_gear,key = lambda x: float(x[sort_by]),reverse=rev)
     else:
