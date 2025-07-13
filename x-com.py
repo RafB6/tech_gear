@@ -2,12 +2,13 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, make_response
 import json
 import sqlite3
+from datetime import datetime
 
 app = Flask(__name__)
 
 @app.route("/")
 def main():
-    return render_template("display/main_page.html")
+    return render_template("display/main_page.html", current_year=datetime.now().year)
 
 def connect_to_database():
     conn = sqlite3.connect('gear.db')
