@@ -24,13 +24,32 @@ def get_Data():
     return gear_data
 gear_data = get_Data()
 
+#CHECK IF A PRODUCT EXISTS
+@app.route("/check_product")
+def check_product():
+    gear_data = get_Data()
+    model = request.args.get("model", None).strip()
+    brand = request.args.get("brand", None).strip()
+    existing_product = None
+    #look for matching product
+    for product in gear_data:
+        if product["model"] == model and product["brand"] == brand:
+            existing_product = product
+            break
+    #make recongnizable pass codes
+    if existing_product is not None:
+        return jsonify(product)
+    else:
+        return jsonify({"existence": "negative"})
+
 #SET THEME COOKIE
 @app.route("/setTheme", methods=['POST'])
-def setTheme():
+def set_theme():
     data = request.get_json()
     theme = data.get('theme', 'light')
     response = make_response(jsonify(success=True))
     response.set_cookie('theme', theme)
+    #SEND COOKIE TO FRONT-END
     return response
 
 #TRANSFERING JSON DATA TO DATABASE
@@ -52,18 +71,6 @@ def add_gear():
         model = request.form.get("model")
         brand = request.form.get("brand")
         price = float(request.form.get("price"))
-
-
-        '''[OLD, SWITCHED TO CLIENT-SIDE VALIDATION]'''
-        #Handle empty strings  
-        #if len(model) == 0 or len(brand) == 0:
-        #    return "Error: detected empty field(s)"
-        #
-        #try:
-        #    price = float(request.form.get("price"))
-        #except (TypeError, ValueError):
-        #    return "Error: Price must be a number", 400
-        '''-----------------------------------------'''
         
         
         conn = connect_to_database()
@@ -87,6 +94,7 @@ def gear():
 
 @app.route("/get_gear", methods=["GET"])
 def get_gear():
+    gear_data = get_Data()
     #get arguments from user
     sort_by = request.args.get('sort_by', 'id')
     reverse = request.args.get('reverse', 'normal')
