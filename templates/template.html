@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="favicon" href="{{ url for('static', filename='icon.jpg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+    <link rel="icon" href="{{ url_for('static', filename='icon.ico') }}" type="image/x-icon">
 </head>
 <body class="{{theme}}">
     <button class="theme-toggle" id="themeToggle" title="Toggle Theme"> Dark </button>
     {% block body %}
     {% endblock %}
 
-
+    
 <script> 
     const toggleButton = document.getElementById('themeToggle');
     const body = document.body;
@@ -20,6 +20,7 @@
     toggleButton.addEventListener('click', () => {
         // check current theme
         const isDark = body.classList.contains('dark-mode') ? "light-mode": "dark-mode";
+
         // handle deleting dark-mode class according to its presence
         body.classList.toggle("dark-mode", isDark === "dark-mode");
         toggleButton.textContent = isDark === 'light-mode' ? 'Light' : 'Dark';
@@ -39,5 +40,4 @@
 </script>
 
 </body>
-
 </html>
