@@ -40,7 +40,7 @@ def check_product():
     if existing_product is not None:
         return jsonify(product)
     else:
-        return jsonify({"existence": "negative"})
+        return jsonify({"doesExist": "No"})
 
 #SET THEME COOKIE
 @app.route("/setTheme", methods=['POST'])
