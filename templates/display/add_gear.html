@@ -45,7 +45,7 @@
             const response = await fetch(`/check_product?model=${encodeURIComponent(model)}&brand=${encodeURIComponent(brand)}`)
             const product = await response.json();
             const container = document.getElementById('card-container');
-            if (product.existence !== "negative") {
+            if (product.doesExist !== "No") {
                 errorMessage.innerHTML = "Record already exists!";
                 const card = document.createElement('div');
                 card.className = 'card';
