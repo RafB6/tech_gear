@@ -1,9 +1,15 @@
 {% extends "template.html" %}
 
-{% block title %} Bazinga {% endblock %}
+{% block title %} MAIN PAGE {% endblock %}
 
 
 {% block body %}
     <h2> Temporary main page </h2>
-    <a href="/gear"> Go to GEAR</a>
-{% endblock %}
+    <div class="banner-container">
+        <div class="banner"><a href="/gear"> GO TO GEAR</a></div>
+        <div class="banner"><a href="/add_gear"> ADD A PRODUCT </a></div>
+    </div>    
+    <footer style="background-color: grey; text-align: center;">
+        Rafał Białczak {{ current_year }} Enterprises 
+    </footer>
+    {% endblock %}
