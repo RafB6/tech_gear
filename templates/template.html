@@ -6,8 +6,8 @@
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></link>
 </head>
-<body>
-    <button class="theme-toggle" id="themeToggle" title="Toggle Theme"> 🌙 </button>
+<body class="{{theme}}">
+    <button class="theme-toggle" id="themeToggle" title="Toggle Theme"> Dark </button>
     {% block body %}
     {% endblock %}
 
@@ -16,17 +16,22 @@
     const toggleButton = document.getElementById('themeToggle');
     const body = document.body;
 
-    if (localStorage.getItem('theme') === 'dark') {
-        body.classList.add("dark-mode");
-        toggleButton.textContent = '🌞';
-    }
-
     toggleButton.addEventListener('click', () => {
-        body.classList.toggle("dark-mode");
-        const isDark = body.classList.contains('dark-mode');
-        toggleButton.textContent = isDark ? '🌞' : '🌙';
-        localStorage.setItem('theme' === isDark ? 'dark' : 'light' )
+        const isDark = body.classList.contains('dark-mode') ? "light-mode": "dark-mode";
+        body.classList.toggle("dark-mode", isDark === "dark-mode");
+        toggleButton.textContent = isDark === 'light-mode' ? 'Light' : 'Dark';
+        
+        fetch("/setTheme", {
+            method: 'POST',
+            headers: {
+                'Content-Type': "application/JSON"
+            },
+            body: JSON.stringify({
+                theme: isDark
+            })
+        });
     })
+
 </script>
 
 </body>
