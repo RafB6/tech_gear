@@ -9,6 +9,8 @@ Toggle between ascending and descending order
 User can add a product to the list
 Client-side validation
 Dark/Light Motive, remembered across the domain with cookies
+Asynchronus duplicate-checking system (fetch, await) with minimizing the use of client's resources
+
 
 soon:possibly adding RESTapi, rating system, 'delete product' feature
 big: login/registration system
