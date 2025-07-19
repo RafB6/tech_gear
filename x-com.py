@@ -6,24 +6,11 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-@app.route("/")
-def main():
-    return render_template("display/main_page.html", current_year=datetime.now().year)
-
 def connect_to_database():
     conn = sqlite3.connect('gear.db')
     conn.row_factory = sqlite3.Row
     return conn
 
-#GET DATA
-def get_Data():
-    conn = connect_to_database()
-    cursor = conn.execute("SELECT * FROM gear")
-    rows = cursor.fetchall()
-    conn.close()
-    gear_data = [dict(row) for row in rows]
-    return gear_data
-gear_data = get_Data()
 
 #CHECK IF A PRODUCT EXISTS
 @app.route("/check_product")
@@ -43,6 +30,7 @@ def check_product():
     else:
         return jsonify({"doesExist": "No"})
 
+
 #SET THEME COOKIE
 @app.route("/setTheme", methods=['POST'])
 def set_theme():
@@ -53,16 +41,33 @@ def set_theme():
     #SEND COOKIE TO FRONT-END
     return response
 
-#TRANSFERING JSON DATA TO DATABASE
-#conn = sqlite3.connect('gear.db')
-#cursor = conn.cursor()
-#for product in gear_data:
-#    cursor.execute(f''' 
-#    INSERT INTO gear (type, brand, model, price, rating) VALUES (?,?,?,?,?)
-#    ''', (product["type"], product["brand"], product["model"], product["price"], product["rating"]))
-#conn.commit()
-#conn.close()
+#GET DATA
+def get_Data():
+    conn = connect_to_database()
+    cursor = conn.execute("SELECT * FROM gear")
+    rows = cursor.fetchall()
+    conn.close()
+    gear_data = [dict(row) for row in rows]
+    return gear_data
+gear_data = get_Data()
+@app.route("/")
 
+
+# MAIN PAGE
+def main():
+    return render_template("display/main_page.html", current_year=datetime.now().year)
+
+
+# GEAR LIST
+@app.route("/gear")
+def gear():
+    theme = request.cookies.get("theme", "light")
+    gear_data = get_Data()
+    return render_template("display/get_gear.html", gear_data = gear_data, theme = theme)
+
+
+
+# ADD FORM
 @app.route("/add_gear", methods=["GET", "POST"])
 def add_gear():
     #Get users values from form
@@ -87,12 +92,8 @@ def add_gear():
     else:
         return render_template("display/add_gear.html", theme=theme)
 
-@app.route("/gear")
-def gear():
-    theme = request.cookies.get("theme", "light")
-    gear_data = get_Data()
-    return render_template("display/get_gear.html", gear_data = gear_data, theme = theme)
 
+# SEARCHING ROUTE
 @app.route("/get_gear", methods=["GET"])
 def get_gear():
     gear_data = get_Data()
@@ -126,3 +127,15 @@ def get_gear():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
+#TRANSFERING JSON DATA TO DATABASE
+#conn = sqlite3.connect('gear.db')
+#cursor = conn.cursor()
+#for product in gear_data:
+#    cursor.execute(f''' 
+#    INSERT INTO gear (type, brand, model, price, rating) VALUES (?,?,?,?,?)
+#    ''', (product["type"], product["brand"], product["model"], product["price"], product["rating"]))
+#conn.commit()
+#conn.close()
