@@ -11,6 +11,18 @@ def connect_to_database():
     conn.row_factory = sqlite3.Row
     return conn
 
+@app.route("/add_rating", methods=["POST"])
+def add_rating():
+    try:
+        rating = int(request.form.get("rating"))
+        comment = request.form.get("comment")
+        prod_id = int(request.form.get("id"))
+        conn = connect_to_database()
+        cursor = conn.execute("INSERT INTO ratings (score, product_id, comment) VALUES (?,?,?)", (rating, prod_id, comment))
+        conn.commit()
+        return jsonify({"issuccess": True})
+    except Exception as e:
+        return jsonify({"error": str(e)})        
 
 #CHECK IF A PRODUCT EXISTS
 @app.route("/check_product")
