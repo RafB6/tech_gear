@@ -10,9 +10,9 @@ User can add a product to the list
 Client-side validation
 Dark/Light Motive, remembered across the domain with cookies
 Asynchronus duplicate-checking system (fetch, await) with minimizing the use of client's resources
+Started making rating system, What's left is displaying the rating data in an efficient way
 
-
-soon:possibly adding RESTapi, rating system, 'delete product' feature
+soon:possibly adding RESTapi, 'delete product' feature
 big: login/registration system
 
 Tech Stack:
