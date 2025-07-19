@@ -49,6 +49,25 @@
                 <td id="highlight">Rating: </td>
                 <td>{{item["rating"]}}</td>
             </tr>
+            <tr>
+                <td colspan="2">
+                    <div class='rating-form'>
+                    <form id="myForm" method='POST' action='/add_rating'; onsubmit='return rate(event, this)'>
+                        <p>WHAT DO YOU THINK ABOUT THE PRODUCT? LET US KNOW!</p>
+                        Overall: <select class='rating' name='rating' required>
+                            <option value='5'>GREAT</option>
+                            <option value='4'>DECENT</option>
+                            <option value='3'>MID</option>
+                            <option value='2'>POOR</option>
+                            <option value='1'>HORRIBLE</option>
+                        </select>
+                        <input class='id' name='id' type='hidden' value="{{ item['id'] }}">
+                        <input type='text' class='comment' name='comment' placeholder='Share your experience'>
+                        <input type='submit' value='Rate'>
+                    </form>
+                    </div>
+                </td>
+            </tr>
         </table>
     </div>
 
@@ -80,6 +99,7 @@
             filtered_data.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'card';
+                card.style = 'width: 200px;';
                 card.innerHTML = `
                 <table>
                     <tr>
@@ -102,12 +122,47 @@
                         <td id="highlight">Rating: </td>
                         <td>${item.rating}</td>
                     </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class='rating-form'>
+                            <form id='myForm' method='POST' action='/add_rating'; onsubmit='return rate(event, this)'>
+                                <p>WHAT DO YOU THINK ABOUT THE PRODUCT? LET US KNOW!</p>
+                                Overall: <select class='rating' name='rating' required>
+                                    <option value='5'>GREAT</option>
+                                    <option value='4'>DECENT</option>
+                                    <option value='3'>MID</option>
+                                    <option value='2'>POOR</option>
+                                    <option value='1'>HORRIBLE</option>
+                                </select>
+                                <input class='id' name='id' type='hidden' value="${item.id}">
+                                <input type='text' class='comment' name='comment' placeholder='Share your experience'>
+                                <input type='submit' value='Rate'>
+                            </form>
+                            </div>
+                        </td>
+                    </tr>
                 </table>
                 `;
                 card_container.appendChild(card);
             })
         })
         .catch(error => console.error('Error fetching sorted gear:', error));
+    }
+    function rate(event, form){ 
+        event.preventDefault();
+        const formData = new FormData(form);
+        fetch(`/add_rating`, {
+            method: "POST",
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.issuccess) {
+                alert("Thanks for your feedback");
+            } else {
+                alert("Failed to submit rating");
+            }
+        })
     }
     //LOOK FOR CHANGES
     document.getElementById('query').addEventListener('input', update_gear_data)
