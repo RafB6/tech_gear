@@ -3,7 +3,9 @@ h1 {
     color: #444;
     margin-bottom: 20px;
 }
-
+.dark-mode h1 {
+    color: #f0f0f0;
+}
 
 input#query, select {
     padding: 10px;
