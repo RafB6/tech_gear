@@ -3,8 +3,16 @@
 {% block title %} ADD GEAR {% endblock %}
 
 {% block body%} 
-    <h1> Add a product </h1>
-    <form method="post" action="" onsubmit="return validate(event)">
+    <h1> Add/Delete a product </h1>
+    <form method="post" action="" id="addForm">
+        
+        <!-- FORM TYPE  -->
+        <select name="formType">
+            <option value="Add"> Add </option>
+            <option value="Delete"> Delete </option>
+        </select> <br>
+        
+        <!-- TYPE  -->
         <label for="type">Type: </label>
         <select name="type">
             <option value="mouse"> Mouse </option>
@@ -12,6 +20,7 @@
             <option value="headset"> Headset </option>
         </select>
         
+        <!-- INPUTS  -->
         <br>
         <label for="model">Model: </label><input type="text" name="model" placeholder="model" autocomplete="off"><br>
         <label for="price">Price: </label><input type="text" name="price" placeholder="price (xxx.xx / xxx)" autocomplete="off"><br>
@@ -24,5 +33,5 @@
     </form>
     <h1><a href="/gear"> Back to gear list </a></h1>
 
-    <script src="{{ url_for('static', filename='scripts/add_gear.js') }}"></script>
+    <script src="/static/scripts/add_gear.js"></script>
     {% endblock %}
