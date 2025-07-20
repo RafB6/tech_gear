@@ -6,14 +6,15 @@ Features:
 Search items by brand or model (user input)
 Sort results by type, price, rating, or ID
 Toggle between ascending and descending order
-User can add a product to the list
 Client-side validation
 Dark/Light Motive, remembered across the domain with cookies
 Asynchronus duplicate-checking system (fetch, await) with minimizing the use of client's resources
-Started making rating system, What's left is displaying the rating data in an efficient way
+Finished rating system that's using other table in db to storing scores, displaying data efficiently thanks to using LEFT JOIN
+REST API technology
+Add/Delete products
 
-soon:possibly adding RESTapi, 'delete product' feature
-big: login/registration system
+soon: Admin users
+
 
 Tech Stack:
 Flask, JavaScript, SQLITE3(used to be JSON, but sqlite is more efficient in this use-case), HTML/CSS, AJAX
