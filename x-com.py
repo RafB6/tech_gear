@@ -30,6 +30,7 @@ def check_product():
     gear_data = get_Data()
     model = request.args.get("model", None).strip()
     brand = request.args.get("brand", None).strip()
+
     existing_product = None
     #look for matching product
     for product in gear_data:
@@ -37,8 +38,8 @@ def check_product():
             existing_product = product
             break
     #make recongnizable pass codes
-    if existing_product is not None:
-        return jsonify(product)
+    if existing_product:
+        return jsonify(existing_product)
     else:
         return jsonify({"doesExist": "No"})
 
@@ -59,10 +60,13 @@ def get_Data():
     cursor = conn.execute("SELECT gear.id, gear.type, gear.brand, gear.model, gear.price, AVG(ratings.score) AS score FROM gear LEFT JOIN ratings ON gear.id = ratings.product_id GROUP BY gear.id")
     rows = cursor.fetchall()
     conn.close()
-    gear_data = [dict(row) for row in rows]
+    gear_data = []
+    for row in rows:
+        row = dict(row)
+        if row["score"] == None:
+            row["score"] = 0
+        gear_data.append(row)
     return gear_data
-gear_data = get_Data()
-print(gear_data)
 
 @app.route("/")
 # MAIN PAGE
@@ -82,25 +86,52 @@ def gear():
 # ADD FORM
 @app.route("/add_gear", methods=["GET", "POST"])
 def add_gear():
-    #Get users values from form
+    gear_data = get_Data()
     theme = request.cookies.get("theme", "light")
-    if request.method == "POST":
+
+    # HANDLE REQUEST (POST by default)
+    if request.method == "POST":    
+        gearCount = len(gear_data)
+        #Get users values from form
         gearType = request.form.get("type")
         model = request.form.get("model")
         brand = request.form.get("brand")
         price = float(request.form.get("price"))
-        
-        
+        formType = request.form.get("formType")
+        #Connect to database
         conn = connect_to_database()
         cursor = conn.cursor()
-        #Insert new product to database
-        cursor.execute(f"INSERT INTO gear (type, brand, model, price, rating) VALUES (?,?,?,?,?)", (gearType, brand, model, price, 0))
-        conn.commit()
-        conn.close()
-        #Update current 'gear_data'
-        gear_data = get_Data()
 
-        return redirect(url_for("gear"))
+        # HANDLE POST REQUEST
+        if formType == "Add":
+            #Insert new product to database
+            try:
+                cursor.execute("INSERT INTO gear (type, brand, model, price) VALUES (?,?,?,?)", (gearType, brand, model, price))
+                conn.commit()
+                conn.close()
+                return redirect(url_for("gear"))
+            except Exception as e:
+                return str(e) + "INSERTING INTO", 500
+        # HANDLE DELETE REQUEST
+        elif formType == "Delete":
+            for i in range(gearCount):
+                product = gear_data[i]
+                # find product to delete
+                if product["brand"] == brand and product["model"] == model:
+                    try:
+                        # DELETE PRODUCT FROM BOTH TABLES
+                        cursor.execute("DELETE FROM gear WHERE id=?", (product["id"],))
+                        cursor.execute("DELETE FROM ratings WHERE product_id=?", (product["id"],))
+                        conn.commit()
+                        conn.close()
+                        # UPDATE GEAR DATA
+                        gear_data = get_Data()
+                        return redirect(url_for("gear"))
+                    except Exception as e:
+                        return e, 500
+        else:
+            return "Unknown form type", 500
+    # HANDLE RENDERING THE SITE
     else:
         return render_template("display/add_gear.html", theme=theme)
 
@@ -110,7 +141,7 @@ def add_gear():
 def get_gear():
     gear_data = get_Data()
     #get arguments from user
-    sort_by = request.args.get('sort_by', 'id')
+    sort_by = request.args.get('sort_by', 'brand')
     reverse = request.args.get('reverse', 'normal')
     query = request.args.get('query', 'default')
     #check for reverse, its value is crucial determine if implementation of sorting algorithm is necessary
@@ -128,7 +159,7 @@ def get_gear():
         query_gear = gear_data
     
     #sort values
-    if sort_by == "price":
+    if sort_by == "price" or sort_by == "score":
         sorted_gear = sorted(query_gear,key = lambda x: float(x[sort_by]),reverse=rev)
     else:
         sorted_gear = sorted(query_gear, key = lambda x: x[sort_by], reverse=rev)
