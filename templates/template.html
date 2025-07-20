@@ -19,11 +19,11 @@
 
     toggleButton.addEventListener('click', () => {
         // check current theme
-        const isDark = body.classList.contains('dark-mode') ? "light-mode": "dark-mode";
+        const nextTheme = body.classList.contains('dark-mode') ? "light-mode": "dark-mode";
 
         // handle deleting dark-mode class according to its presence
-        body.classList.toggle("dark-mode", isDark === "dark-mode");
-        toggleButton.textContent = isDark === 'light-mode' ? 'Light' : 'Dark';
+        body.classList.toggle("dark-mode", nextTheme === "dark-mode");
+        toggleButton.textContent = nextTheme === 'light-mode' ? 'Light' : 'Dark';
         
         // send theme cookie to back-end
         fetch("/setTheme", {
@@ -32,7 +32,7 @@
                 'Content-Type': "application/JSON"
             },
             body: JSON.stringify({
-                theme: isDark
+                theme: nextTheme
             })
         });
     })
