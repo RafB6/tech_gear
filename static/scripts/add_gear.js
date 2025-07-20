@@ -44,7 +44,7 @@ try {
             </tr>
             <tr>
                 <td id="highlight">Rating: </td>
-                <td>${product.rating}</td>
+                <td>${product.score}</td>
             </tr>
         </table>
         `;

@@ -40,7 +40,7 @@ function update_gear_data(){
                 </tr>
                 <tr>
                     <td id="highlight">Rating: </td>
-                    <td>[ soon ]</td>
+                    <td>${item.rating}</td>
                 </tr>
                 <tr>
                     <td colspan="2">
