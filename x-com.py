@@ -56,15 +56,15 @@ def set_theme():
 #GET DATA
 def get_Data():
     conn = connect_to_database()
-    cursor = conn.execute("SELECT * FROM gear")
+    cursor = conn.execute("SELECT gear.id, gear.type, gear.brand, gear.model, gear.price, AVG(ratings.score) AS score FROM gear LEFT JOIN ratings ON gear.id = ratings.product_id GROUP BY gear.id")
     rows = cursor.fetchall()
     conn.close()
     gear_data = [dict(row) for row in rows]
     return gear_data
 gear_data = get_Data()
+print(gear_data)
+
 @app.route("/")
-
-
 # MAIN PAGE
 def main():
     return render_template("display/main_page.html", current_year=datetime.now().year)
