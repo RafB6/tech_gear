@@ -12,8 +12,11 @@ Asynchronus duplicate-checking system (fetch, await) with minimizing the use of 
 Finished rating system that's using other table in db to storing scores, displaying data efficiently thanks to using LEFT JOIN
 REST API technology
 Add/Delete products
+Minimalized engagement from server
+Client-side sorting
 
-soon: Admin users
+
+current works: fixing bugs
 
 
 Tech Stack:
