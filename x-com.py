@@ -63,7 +63,7 @@ def get_Data():
     gear_data = []
     for row in rows:
         row = dict(row)
-        if row["score"] == None:
+        if not row["score"]:
             row["score"] = 0
         gear_data.append(row)
     return gear_data
@@ -83,7 +83,7 @@ def gear():
 
 
 
-# ADD FORM
+# ADD/DELETE FORM
 @app.route("/add_gear", methods=["GET", "POST"])
 def add_gear():
     gear_data = get_Data()
@@ -140,16 +140,12 @@ def add_gear():
 @app.route("/get_gear", methods=["GET"])
 def get_gear():
     gear_data = get_Data()
-    #get arguments from user
-    sort_by = request.args.get('sort_by', 'brand')
-    reverse = request.args.get('reverse', 'normal')
-    query = request.args.get('query', 'default')
-    #check for reverse, its value is crucial determine if implementation of sorting algorithm is necessary
-    rev = (reverse == "reverse")
+
+    query = request.args.get("query")
 
     query_gear = []
-    #Look for items according to user's input
-    if query != "default" and len(query) > 0 and query is not None:
+    # Filter items according to user's input
+    if len(query) > 0 and query is not None:
         for elem in gear_data:
             if elem not in query_gear:
                 #Check if any sort category contains user's query
@@ -157,20 +153,24 @@ def get_gear():
                     query_gear.append(elem)
     else:
         query_gear = gear_data
-    
-    #sort values
-    if sort_by == "price" or sort_by == "score":
-        sorted_gear = sorted(query_gear,key = lambda x: float(x[sort_by]),reverse=rev)
-    else:
-        sorted_gear = sorted(query_gear, key = lambda x: x[sort_by], reverse=rev)
 
     #return JSON to browser
-    return jsonify(sorted_gear)
+    return jsonify(query_gear)
 
 
 if __name__ == '__main__':
     app.run(debug=True)
 
+
+#ERROR HANDLERS
+@app.errorhandler(404)
+def not_found(e):
+    return "Page not found (404) check code for wrong routes"
+
+
+@app.errorhandler(500)
+def internal_error(e):
+    return "Internal error, something broke on the server"
 
 
 #TRANSFERING JSON DATA TO DATABASE
