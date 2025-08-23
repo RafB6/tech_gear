@@ -141,21 +141,19 @@ def add_gear():
 def get_gear():
     gear_data = get_Data()
 
-    query = request.args.get("query")
-
-    query_gear = []
-    # Filter items according to user's input
-    if len(query) > 0 and query is not None:
-        for elem in gear_data:
-            if elem not in query_gear:
-                #Check if any sort category contains user's query
-                if query.lower() in str(elem["brand"]).lower() or query.lower() in str(elem["model"]).lower():
-                    query_gear.append(elem)
-    else:
-        query_gear = gear_data
-
+    return jsonify(gear_data)
+    #query = request.args.get("query")
+    #query_gear = []
+    ## Filter items according to user's input
+    #if len(query) > 0 and query != "":
+    #    for elem in gear_data:
+    #        if elem not in query_gear:
+    #            #Check if any sort category contains user's query
+    #            if query.lower() in str(elem["brand"]).lower() or query.lower() in str(elem["model"]).lower():
+    #                query_gear.append(elem)
+    #else:
+    #    query_gear = gear_data
     #return JSON to browser
-    return jsonify(query_gear)
 
 
 if __name__ == '__main__':
