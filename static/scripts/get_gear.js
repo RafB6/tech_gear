@@ -1,12 +1,24 @@
 // STORING FETCHED DATA
-let currentGearData = []
+let full_data = []
+getData()
+
+async function getData() {
+    const response = await fetch("/get_gear");
+    const full_gear_data = await response.json();
+    full_data = full_gear_data;
+    display_data(full_data)
+}
+// DISPLAYING INITIAL DATA
+window.addEventListener('load', getData);
+
 
 //UPDATE DATA DYNAMICALLY
 function update_gear_data(){
-    const type = document.getElementById('sort-select').value;
+    const key = document.getElementById('sort-select').value;
     const reverse = document.getElementById('reverse-order').value;
+    const query = document.getElementById('query').value;
 
-    const sorted_data = sort_data(currentGearData, type, reverse);
+    const sorted_data = sort_data(query, key, reverse);
     //CHECK FOR EXISTING DATA, DISPLAY IT ACCORDINGLY
     if (sorted_data) display_data(sorted_data);
     else {
@@ -32,34 +44,25 @@ function rate(event, form){
 }
 
 
-//LOOK FOR CHANGES
-// FETCH ON QUERY ONLY
-document.getElementById('query').addEventListener('input', async () => {
-    const query = document.getElementById("query").value;
-    try {
-        const response = await fetch(`/get_gear?query=${encodeURIComponent(query)}`);
-        const data = await response.json();
-        currentGearData = data;
-        update_gear_data();
-    } catch(error) {
-        document.getElementById("error_message").innerHTML = "ERROR WHILE FETCHING" + String(error);
-    }
-});
-
+// Update on-select
 document.getElementById('sort-select').addEventListener('change', update_gear_data);
 document.getElementById('reverse-order').addEventListener('change', update_gear_data);
+document.getElementById('query').addEventListener('input', update_gear_data);
 
-
+function doesInclude(element, query) {
+    const q = query.toLowerCase();
+    return ((element.model.toLowerCase().includes(q)) || (element.type.toLowerCase().includes(q)));
+}
 // (sorting in JavaScript is the goofiest thing I've ever seen)
-function sort_data(data, key, reverse) {
-    let sorted_data = [...data];
+function sort_data(query, key, reverse) {
+    let sorted_data = full_data.filter((element) => doesInclude(element, query));
 
     switch(key) {
         case "id":
-            sorted_data = data.sort((a,b) => a.id - b.id);
+            sorted_data.sort((a,b) => a.id - b.id);
             break;
         case "type":
-            sorted_data = data.sort((a,b) => {
+            sorted_data.sort((a,b) => {
                 const aType = a.type.toUpperCase();
                 const bType = b.type.toUpperCase();
                 if (aType < bType) return -1;
@@ -68,22 +71,22 @@ function sort_data(data, key, reverse) {
             })
             break;
         case "price":
-            sorted_data = data.sort((a,b) => parseFloat(a.price) - parseFloat(b.price));
+            sorted_data.sort((a,b) => parseFloat(a.price) - parseFloat(b.price));
             break;
         case "rating":
-            sorted_data = data.sort((a,b) => parseFloat(a.score) - parseFloat(b.score));
+            sorted_data.sort((a,b) => parseFloat(a.score) - parseFloat(b.score));
             break;
         default:
-            sorted_data = data;
+            break;
         };
-
+        // REVERSING
     return (reverse === "reverse") ? sorted_data.reverse() : sorted_data;
 }
 
-function display_data(data) {
+function display_data(full_data) {
     const card_container = document.querySelector(".card-container");
     card_container.innerHTML = '';
-    data.forEach(item => {
+    full_data.forEach(item => {
         const card = document.createElement('div');
         card.className = 'card';
         card.style = 'width: 200px;';
