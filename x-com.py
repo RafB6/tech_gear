@@ -1,4 +1,3 @@
-#from objects_functions import get_id
 from flask import Flask, render_template, request, jsonify, redirect, url_for, make_response
 import json
 import sqlite3
@@ -22,7 +21,7 @@ def add_rating():
         conn.commit()
         return jsonify({"issuccess": True})
     except Exception as e:
-        return jsonify({"error": str(e)})        
+        return jsonify({"error": str(e)})
 
 #CHECK IF A PRODUCT EXISTS
 @app.route("/check_product")
