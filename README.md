@@ -24,5 +24,5 @@ Flask, JavaScript, SQLITE3(used to be JSON, but sqlite is more efficient in this
 
 How to run:
 Install flask ("pip install flask")
-Run app.py
+Run x-com.py
 Open http://localhost:5000
