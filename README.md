@@ -23,6 +23,8 @@ Tech Stack:
 Flask, JavaScript, SQLITE3(used to be JSON, but sqlite is more efficient in this use-case), HTML/CSS, AJAX
 
 How to run:
-Install flask ("pip install flask")
-Run "python3 x-com.py runserver"
-Open http://localhost:5000
+It's currently based on render.com 
+ |
+ |
+\|/
+https://tech-gear-oor6.onrender.com
