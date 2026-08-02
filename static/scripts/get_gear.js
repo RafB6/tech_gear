@@ -53,7 +53,6 @@ function doesInclude(element, query) {
     const q = query.toLowerCase();
     return ((element.model.toLowerCase().includes(q)) || (element.type.toLowerCase().includes(q)));
 }
-// (sorting in JavaScript is the goofiest thing I've ever seen)
 function sort_data(query, key, reverse) {
     let sorted_data = full_data.filter((element) => doesInclude(element, query));
 
