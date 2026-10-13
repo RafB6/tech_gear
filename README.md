@@ -21,10 +21,3 @@ current works: fixing bugs
 
 Tech Stack:
 Flask, JavaScript, SQLITE3(used to be JSON, but sqlite is more efficient in this use-case), HTML/CSS, AJAX
-
-How to run:
-It's currently based on render.com 
- |
- |
-\|/
-https://tech-gear-oor6.onrender.com
