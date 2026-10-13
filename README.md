@@ -21,3 +21,7 @@ current works: fixing bugs
 
 Tech Stack:
 Flask, JavaScript, SQLITE3(used to be JSON, but sqlite is more efficient in this use-case), HTML/CSS, AJAX
+
+how to run:
+install flask
+run "python x-com.py run"
